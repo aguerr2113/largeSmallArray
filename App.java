@@ -2,37 +2,52 @@ import java.util.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        // create scanner object for user input
+        // Create scanner object for user input
         Scanner sc = new Scanner(System.in);
-        // create int variable for captureing the length of the array
         int lengthList = 0;
-        // create boolean for checkingif user input is valid or not
         boolean validInput = false;
 
-        // while user input isinvalid do this
+        // While user input is invalid do this
         while (!validInput) {
             System.out.println("How many inputs will the length of this list be: ");
-            // if object is a integer do this
+            
             if (sc.hasNextInt()) {
-                // set checker to true
-                validInput = true;
-                // save user input as the length of list
                 lengthList = sc.nextInt();
-                // create array variable
+
+                // Check if the length is greater than 0
+                if (lengthList <= 0) {
+                    System.out.println("Invalid input: List length must be greater than 0.");
+                    continue; // Ask for input again
+                }
+
+                validInput = true; // Input is valid, exit loop
+
+                // Create array
                 int[] inArray = new int[lengthList];
-                // for loop that runs the length of the number the user input
-                for (int i = 0; i <= lengthList - 1; i++) { 
-                    // every time this itterates it will ask the user for a number
-                    System.out.println("What is the " + (i + 1) + " number in the list: ");
+
+                // Loop to get user input
+                for (int i = 0; i < lengthList; i++) { 
+                    System.out.println("Enter number " + (i + 1) + ": ");
                     inArray[i] = sc.nextInt();
                 }
-                System.out.println("You entered: " + Arrays.toString(inArray));
-            }
-            
-            else{
-                System.out.println("Invalid input: ");
-                sc.next();
+
+                // Create a copy and sort the array
+                int[] newArray = Arrays.copyOf(inArray, inArray.length);
+                Arrays.sort(newArray);
+
+                // Print sorted array
+                System.out.println("Sorted array: " + Arrays.toString(newArray));
+
+                // Print lowest and highest numbers
+                System.out.println("The lowest number is: " + newArray[0]);
+                System.out.println("The highest number is: " + newArray[newArray.length - 1]);
+            } 
+            else {
+                System.out.println("Invalid input: Please enter an integer.");
+                sc.next(); // Consume invalid input
             }
         }
+
+        sc.close(); // Close scanner to prevent resource leak
     }
 }
